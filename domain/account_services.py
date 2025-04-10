@@ -1,8 +1,7 @@
 from typing import Optional
 from uuid import UUID
-
-from models.accounts import Account, AccountType
-from models.transactions import Transaction, TransactionType
+from entities.accounts import Account, AccountType
+from entities.transactions import Transaction, TransactionType
 
 
 class AccountValidationService:

@@ -20,7 +20,7 @@ class Account(BaseModel):
     date_created:datetime = Field(default_factory= datetime.now)
 
     def deposit(self, amount: float) ->bool:
-        # Add money to the acocunt
+        # Add money to the accunt
         if amount <= 0:
             return False
         self.balance +=amount

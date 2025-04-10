@@ -1,6 +1,5 @@
 from typing import Optional
 from uuid import UUID
-
 from models.accounts import Account, AccountType
 from models.transactions import Transaction, TransactionType
 

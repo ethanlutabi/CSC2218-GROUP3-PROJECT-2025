@@ -8,7 +8,7 @@ from domain.exceptions import (
     AccountNotFoundError,
     InvalidTransactionError
 )
-from application.service.dtos import TransactionDTO
+from application.services.dtos import TransactionDTO
 
 class TransactionService:
     """Application service for handling transactions"""

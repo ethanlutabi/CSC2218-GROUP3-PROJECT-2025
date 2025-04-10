@@ -3,9 +3,9 @@ from typing import List
 
 from domain.entities.account import Account
 from domain.entities.transaction import Transaction
-from application.services.account_creation_service import AccountCreationService
+from application.services.account_service import AccountCreationService
 from application.services.transaction_service import TransactionService
-from application.dtos import (
+from application.services.dtos import (
     CreateAccountDTO,
     TransactionDTO,
     AccountBalanceDTO,

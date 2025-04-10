@@ -2,9 +2,9 @@ from uuid import uuid4
 from datetime import datetime
 from typing import Optional
 
-from domain.entities.account import Account, AccountType, AccountStatus
-from domain.exceptions import InvalidAccountTypeError
-from application.service.dtos import CreateAccountDTO
+from domain.entities.account import Account, AccountType, AccountStatus # type: ignore
+from domain.exceptions import InvalidAccountTypeError # type: ignore
+from application.service.dtos import CreateAccountDTO # type: ignore
 
 class AccountCreationService:
     """Application service for account creation (Factory Pattern)"""

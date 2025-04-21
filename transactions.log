@@ -1,0 +1,9 @@
+2025-04-19 04:52:43,267 - banking - INFO - Transaction d9a2e6c1-6880-4400-a1b3-4cbcc6adf3ec: Type=DEPOSIT, Amount=2000054.0, Account=f03d6de2-74ae-4adb-9649-206954ad7af5
+2025-04-19 04:52:54,625 - banking - ERROR - Transaction failed: Insufficient funds
+2025-04-19 04:53:12,275 - banking - INFO - Transaction 0e417754-6d21-43eb-951a-384d3661ead6: Type=WITHDRAW, Amount=4000.0, Account=f03d6de2-74ae-4adb-9649-206954ad7af5
+2025-04-19 04:54:24,074 - banking - ERROR - Transaction failed: 'InMemoryTransactionRepository' object has no attribute 'save'
+2025-04-19 04:57:58,935 - banking - INFO - Transaction c67f869b-8975-4ba6-a7f0-ef9f3a7266fd: Type=TRANSFER, Amount=200.0, Account=2245c57d-cc6e-424a-9ec6-a2cc1d3e000b, DestAccount=418fe878-be88-4e5c-860b-6e66641191a2
+2025-04-19 05:08:00,372 - banking - INFO - Transaction c68fdf7b-9754-4792-b71f-043aadd0c523: Type=TRANSFER, Amount=200.0, Account=3dcf892b-09b4-45fe-bb56-d0953ad6a3df, DestAccount=f46aa319-fde2-4788-a661-ef54b2c83654
+2025-04-19 05:10:19,842 - banking - INFO - Transaction 0d345de0-1c42-48d3-9949-dc56fbb971c8: Type=DEPOSIT, Amount=5000.0, Account=3dcf892b-09b4-45fe-bb56-d0953ad6a3df
+2025-04-19 05:10:55,822 - banking - INFO - Transaction a554e70a-fd1c-4930-b045-36183f880ec9: Type=WITHDRAW, Amount=100.0, Account=3dcf892b-09b4-45fe-bb56-d0953ad6a3df
+2025-04-19 05:11:23,772 - banking - INFO - Transaction 85c38b72-f072-437a-8fd8-e0addca83d46: Type=TRANSFER, Amount=500.0, Account=3dcf892b-09b4-45fe-bb56-d0953ad6a3df, DestAccount=f46aa319-fde2-4788-a661-ef54b2c83654

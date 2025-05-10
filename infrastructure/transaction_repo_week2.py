@@ -24,3 +24,15 @@ class InMemoryTransactionRepository(TransactionRepositoryInterface):
         if not tx:
             raise KeyError(f"Transaction {tx_id} not found")
         return tx
+    def save_transfer_transaction(self, transaction: Transaction, counterpart_transaction: Transaction) -> tuple[str, str]:
+        
+        # Ensure both transactions are properly linked as counterparts
+        transaction.related_transaction_id = counterpart_transaction.transaction_id
+        counterpart_transaction.related_transaction_id = transaction.transaction_id
+        
+        # Save both transactions
+        tx_id = self.save_transaction(transaction)
+        counterpart_tx_id = self.save_transaction(counterpart_transaction)
+        
+        return tx_id, counterpart_tx_id
+

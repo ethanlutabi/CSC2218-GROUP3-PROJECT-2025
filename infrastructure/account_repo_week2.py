@@ -23,15 +23,34 @@ class InMemoryAccountRepository(AccountRepositoryInterface):
             raise KeyError(f"Account {account.account_id} not found")
         self._accounts[account.account_id] = account
     
-    def update_accounts(self, source: Account, dest: Account) -> None:
-
+    def transfer_between_accounts(self, source_id: str, dest_id: str, amount: float) -> None:
         """
-        Atomically update both source and destination accounts.
-        In a real DB this would be in a transaction.
+        Transfer money between accounts with proper balance checking.
+        
+        Args:
+            source_id: ID of the source account
+            dest_id: ID of the destination account
+            amount: Amount to transfer (must be positive)
+            
+        Raises:
+            KeyError: If either account doesn't exist
+            ValueError: If amount is invalid or insufficient funds
         """
-         
-        if source.account_id not in self._accounts or dest.account_id not in self._accounts:
-            raise KeyError("One or both accounts not found")
-        self._accounts[source.account_id] = source
-        self._accounts[dest.account_id] = dest
+        if amount <= 0:
+            raise ValueError("Transfer amount must be positive")
+            
+        # Get accounts (will raise KeyError if not found)
+        source_account = self.get_account(source_id)
+        dest_account = self.get_account(dest_id)
+        
+        # Check sufficient balance
+        if source_account.balance < amount:
+            raise ValueError(f"Insufficient funds in account {source_id}")
+        
+        # Update balances
+        source_account.balance -= amount
+        dest_account.balance += amount
+        
+        # Atomically update both accounts
+        self.update_accounts(source_account, dest_account)
 

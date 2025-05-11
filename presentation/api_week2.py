@@ -32,3 +32,16 @@ app = FastAPI()
 @app.get("/", include_in_schema=False)
 def root():
     return {"message": "Welcome! See /docs for API endpoints."}
+
+
+# Infrastructure wiring
+account_repo = InMemoryAccountRepository()
+transaction_repo = InMemoryTransactionRepository()
+notifier = ConsoleNotificationAdapter()
+logger = ConsoleLogger()
+
+# Application services
+account_service = AccountCreationService(account_repo)
+base_tx_service = TransactionService(account_repo, transaction_repo)
+tx_service_with_logging = TransactionServiceLogger(base_tx_service, logger)
+fund_transfer_service = FundTransferService(account_repo, transaction_repo, notification_adapter=notifier)

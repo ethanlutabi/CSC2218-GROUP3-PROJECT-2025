@@ -22,18 +22,15 @@ app = FastAPI()
 
 
 
-# Setup dependencies
+# Infrastructure -> Application wiring
 account_repo = InMemoryAccountRepository()
 transaction_repo = InMemoryTransactionRepository()
-'''THIS IS WEEK TWO WORK'''
-account_creation_service = AccountCreationService(account_repo)
+account_service = AccountCreationService(account_repo)
 transaction_service = TransactionService(account_repo, transaction_repo)
 
-'''THIS IS WEEK TWO WORK'''
-# Notification setup
-email_adapter = EmailNotificationAdapter()
-sms_adapter = SMSNotificationAdapter()
-notification_service = NotificationService(account_repo, [email_adapter, sms_adapter])
+
+
+
 
 # Transaction logging
 transaction_logger = TransactionLogger()

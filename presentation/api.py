@@ -1,27 +1,21 @@
-# presentation/app.py
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from datetime import datetime
-from enum import Enum
-from typing import Optional, List
+from infrastructure.account_repo import InMemoryAccountRepository
+from infrastructure.transaction_repo import InMemoryTransactionRepository
+from application.services import AccountCreationService
+from application.__init__ import TransactionService
 
-from domain.account import AccountType as DomainAccountType, AccountStatus as DomainAccountStatus
-from domain.transaction import TransactionType as DomainTransactionType
-from infrastructure.account_repository import InMemoryAccountRepository
-from infrastructure.transaction_repository import InMemoryTransactionRepository
-from application.account_services import AccountCreationService
-from application.transaction_services import TransactionService
-from infrastructure.account_repository import InMemoryAccountRepository
-from infrastructure.transaction_repository import InMemoryTransactionRepository
-from infrastructure.notification_adapters import EmailNotificationAdapter, SMSNotificationAdapter
+# Request schemas
+class CreateAccountRequest(BaseModel):
+    account_type: str
+    account_id: str
+    owner: str
+    initial_deposit: float = 0.0
 
+class TransactionRequest(BaseModel):
+    amount: float
 
-from application.fund_transfer_services import FundTransferService
-from application.notification_service import NotificationService
-from application.transaction_logger import TransactionLogger
-
-
-
+# FastAPI app initialization
 app = FastAPI()
 
 

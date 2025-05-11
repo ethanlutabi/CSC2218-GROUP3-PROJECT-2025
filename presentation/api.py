@@ -59,3 +59,33 @@ def withdraw(account_id: str, req: TransactionRequest):
         raise HTTPException(status_code=400, detail=str(e))
 
 
+@app.get("/accounts/{account_id}/balance")
+def get_balance(account_id: str):
+    try:
+        account = account_repo.get_account(account_id)
+        return {"balance": account.balance}
+    except KeyError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+
+@app.get("/accounts/{account_id}/transactions")
+def get_transactions(account_id: str):
+    try:
+        txs = transaction_service.get_transactions(account_id)
+        return [
+            {
+                "transaction_id": t.transaction_id,
+                "type": t.transaction_type,
+                "amount": t.amount,
+                "timestamp": t.timestamp.isoformat(),
+            }
+            for t in txs
+        ]
+    except KeyError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+
+@app.get("/", tags=["root"])
+def read_root():
+    return {"message": "Welcome to the Banking API. See /docs for usage."}
+
+
+

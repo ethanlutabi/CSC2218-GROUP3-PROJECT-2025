@@ -15,58 +15,21 @@ class NotificationAdapter(ABC):
     
     @abstractmethod
     def send_email(self, recipient: str, subject: str, body: str, **kwargs) -> bool:
-        """
-        Send an email notification.
-        
-        Args:
-            recipient: Email address of the recipient
-            subject: Email subject line
-            body: Email body content
-            **kwargs: Additional parameters (like attachments, cc, etc.)
-            
-        Returns:
-            bool: True if sent successfully, False otherwise
-        """
+       
         pass
     
     @abstractmethod
     def send_sms(self, phone_number: str, message: str, **kwargs) -> bool:
-        """
-        Send an SMS notification.
-        
-        Args:
-            phone_number: Recipient's phone number
-            message: SMS message content
-            **kwargs: Additional parameters (like sender ID, etc.)
-            
-        Returns:
-            bool: True if sent successfully, False otherwise
-        """
-        pass
+      
     
-    @abstractmethod
-    def send_notification(self, channel: str, recipient: str, content: Dict[str, Any]) -> bool:
-        """
-        Generic method to send notification through specified channel.
+     @abstractmethod
+     def send_notification(self, channel: str, recipient: str, content: Dict[str, Any]) -> bool:
         
-        Args:
-            channel: Notification channel ("email", "sms", etc.)
-            recipient: Recipient address (email, phone number, etc.)
-            content: Content of the notification with channel-specific fields
-            
-        Returns:
-            bool: True if sent successfully, False otherwise
-        """
-        pass
 
-
-class CompositeNotificationAdapter(NotificationAdapter):
-    """
-    Implementation of NotificationAdapter that composes multiple channel-specific adapters.
-    This allows for easy integration of different notification providers.
-    """
+      class CompositeNotificationAdapter(NotificationAdapter):
     
-    def __init__(self, email_adapter: EmailNotificationAdapter, sms_adapter: SMSNotificationAdapter):
+    
+       def __init__(self, email_adapter: EmailNotificationAdapter, sms_adapter: SMSNotificationAdapter):
         self.email_adapter = email_adapter
         self.sms_adapter = sms_adapter
     
@@ -80,15 +43,7 @@ class CompositeNotificationAdapter(NotificationAdapter):
         return self.sms_adapter.send(phone_number, message)
     
     def send_notification(self, channel: str, recipient: str, content: Dict[str, Any]) -> bool:
-        """
-        Send notification through the specified channel.
         
-        Args:
-            channel: "email" or "sms"
-            recipient: Email address or phone number
-            content: For email: {"subject": "...", "body": "..."}
-                     For SMS: {"message": "..."}
-        """
         if channel.lower() == "email":
             return self.send_email(
                 recipient=recipient,

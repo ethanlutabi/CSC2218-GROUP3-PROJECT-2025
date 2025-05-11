@@ -30,19 +30,20 @@ transaction_service = TransactionService(account_repo, transaction_repo)
 
 
 
+# Presentation Layer Endpoints
+@app.post("/accounts")
+def create_account(req: CreateAccountRequest):
+    try:
+        account_id = account_service.create_account(
+            req.account_type, req.account_id, req.owner, req.initial_deposit
+        )
+        return {"account_id": account_id}
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
 
-# Transaction logging
-transaction_logger = TransactionLogger()
 
-# Core services with logging
-fund_transfer_service = FundTransferService(account_repo, transaction_repo)
 
-'''THIS IS WEEK TWO WORK'''
-# Decorate methods with logging
-transaction_service.deposit = transaction_logger.log_transaction(transaction_service.deposit)
-transaction_service.withdraw = transaction_logger.log_transaction(transaction_service.withdraw)
-fund_transfer_service.transfer_funds = transaction_logger.log_transaction(fund_transfer_service.transfer_funds)
 
 # Pydantic models for API
 class AccountType(str, Enum):

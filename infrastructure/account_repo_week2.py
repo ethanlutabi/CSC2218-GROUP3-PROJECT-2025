@@ -24,18 +24,7 @@ class InMemoryAccountRepository(AccountRepositoryInterface):
         self._accounts[account.account_id] = account
     
     def transfer_between_accounts(self, source_id: str, dest_id: str, amount: float) -> None:
-        """
-        Transfer money between accounts with proper balance checking.
-        
-        Args:
-            source_id: ID of the source account
-            dest_id: ID of the destination account
-            amount: Amount to transfer (must be positive)
-            
-        Raises:
-            KeyError: If either account doesn't exist
-            ValueError: If amount is invalid or insufficient funds
-        """
+       
         if amount <= 0:
             raise ValueError("Transfer amount must be positive")
             

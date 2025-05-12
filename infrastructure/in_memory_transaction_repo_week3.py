@@ -2,9 +2,9 @@ import csv
 import io
 from typing import Dict, List, Optional, Union, BinaryIO
 from datetime import datetime
-from domain.accounts.transaction import Transaction
+from domain.transaction import Transaction
 
-class InMemoryTransactionRepository(TransactionRepositoryInterface):
+class InMemoryTransactionRepository:
     # Existing methods...
     
     # Added for statement generation

@@ -12,19 +12,12 @@ DEFAULT_FORMAT = '%(asctime)s [%(levelname)s] [%(name)s] [%(transaction_id)s] %(
 TRANSACTION_FORMAT = '%(asctime)s [%(levelname)s] [TRANSACTION] [%(transaction_id)s] [%(transaction_type)s] %(message)s'
 
 class BankingLogger:
-    """
-    Central logging facility for the banking application.
-    Provides both general-purpose logging and specialized transaction logging.
-    """
+   
+    
     
     def __init__(self, app_name: str = "banking-app", log_level: int = logging.INFO):
-        """
-        Initialize the logger with application name and log level.
         
-        Args:
-            app_name: Name of the application for the root logger
-            log_level: Default logging level
-        """
+        
         # Set up the root logger
         self.root_logger = logging.getLogger(app_name)
         self.root_logger.setLevel(log_level)
@@ -47,24 +40,13 @@ class BankingLogger:
         
         # Add a file handler specifically for transactions if needed
         # Uncomment and configure in production
-        """
-        file_handler = logging.FileHandler("transactions.log")
-        file_handler.setFormatter(logging.Formatter(TRANSACTION_FORMAT))
-        logger.addHandler(file_handler)
-        """
+       
         
         return logger
     
     def get_component_logger(self, component_name: str) -> logging.Logger:
-        """
-        Get or create a logger for a specific component.
         
-        Args:
-            component_name: Name of the component (e.g., "account_service")
-            
-        Returns:
-            Logger instance for the component
-        """
+        
         if component_name not in self._component_loggers:
             logger = logging.getLogger(f"{self.root_logger.name}.{component_name}")
             self._component_loggers[component_name] = logger
@@ -76,15 +58,7 @@ class BankingLogger:
                         transaction_id: str, 
                         details: Dict[str, Any], 
                         level: int = logging.INFO) -> None:
-        """
-        Log a transaction with detailed information.
-        
-        Args:
-            transaction_type: Type of transaction (DEPOSIT, WITHDRAWAL, TRANSFER, etc.)
-            transaction_id: Unique ID of the transaction
-            details: Dictionary with transaction details
-            level: Logging level
-        """
+
         extra = {
             'transaction_id': transaction_id,
             'transaction_type': transaction_type
@@ -95,15 +69,7 @@ class BankingLogger:
         self.transaction_logger.log(level, f"{transaction_type}: {details_json}", extra=extra)
     
     def log(self, level: int, message: str, transaction_id: Optional[str] = None, **kwargs) -> None:
-        """
-        Log a general message with optional transaction ID.
-        
-        Args:
-            level: Logging level
-            message: Message to log
-            transaction_id: Optional transaction ID for context
-            **kwargs: Additional context to include in the log
-        """
+                
         extra = {'transaction_id': transaction_id or 'N/A'}
         self.root_logger.log(level, message, extra=extra, **kwargs)
     
@@ -124,13 +90,7 @@ class BankingLogger:
 # Decorator for method logging
 def log_method_call(logger: Optional[Union[BankingLogger, logging.Logger]] = None, 
                    level: int = logging.DEBUG):
-    """
-    Decorator to log method calls with parameters and return values.
-    
-    Args:
-        logger: Logger to use (if None, gets a new logger based on the class name)
-        level: Logging level for the messages
-    """
+   
     def decorator(func: Callable) -> Callable:
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
@@ -199,31 +159,4 @@ def log_method_call(logger: Optional[Union[BankingLogger, logging.Logger]] = Non
 banking_logger = BankingLogger()
 
 
-# Example usage:
-"""
-# Get component logger
-account_logger = banking_logger.get_component_logger("account_service")
 
-# Log regular message
-banking_logger.info("Application started")
-
-# Log with transaction ID
-banking_logger.info("Processing deposit", transaction_id="tx123")
-
-# Log transaction
-banking_logger.log_transaction(
-    transaction_type="DEPOSIT",
-    transaction_id="tx123",
-    details={"account_id": "acc456", "amount": 100.00}
-)
-
-# Use decorator
-@log_method_call()
-def process_transaction(tx_id, amount):
-    return f"Processed {amount} for {tx_id}"
-
-# Or with specific logger
-@log_method_call(logger=account_logger)
-def create_account(user_id, initial_balance):
-    return f"Created account for {user_id}"
-"""

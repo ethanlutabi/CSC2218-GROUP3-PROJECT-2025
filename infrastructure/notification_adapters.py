@@ -59,9 +59,3 @@ class NotificationAdapter(ABC):
             raise ValueError(f"Unsupported notification channel: {channel}")
 
 
-# Example of creating the composite adapter with the mock adapters
-def create_notification_service():
-    """Factory function to create a notification service with configured adapters."""
-    email_adapter = EmailNotificationAdapter()
-    sms_adapter = SMSNotificationAdapter()
-    return CompositeNotificationAdapter(email_adapter, sms_adapter)

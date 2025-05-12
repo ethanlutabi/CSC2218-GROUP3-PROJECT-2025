@@ -1,8 +1,8 @@
 from typing import Dict, Optional, List
 from datetime import date, datetime
-from domain.accounts.create_accounts import Account
+from domain.accounts import Account
 
-class InMemoryAccountRepository(AccountRepositoryInterface):
+class InMemoryAccountRepository:
     def __init__(self):
         # Existing code...
         self._accounts: Dict[str, Account] = {}

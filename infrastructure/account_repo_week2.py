@@ -1,6 +1,6 @@
 from typing import Dict
 from application.services import AccountRepositoryInterface
-from domain.accounts.create_accounts import Account
+from domain.accounts import Account
 
 
 class InMemoryAccountRepository(AccountRepositoryInterface):

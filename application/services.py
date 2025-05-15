@@ -1,8 +1,10 @@
 from abc import ABC, abstractmethod
 from typing import List
-from domain.accounts.create_accounts import Account, AccountFactory
+from domain.accounts.create_accounts import Account
+from domain.accounts.factory import AccountFactory
 from domain.accounts.transaction import Transaction
-from domain.accounts.services import BusinessRuleService
+from domain.accounts.service_rule import BusinessRuleService
+from domain.interest.limits_constraint import LimitConstraint
 
 
 # Repository interfaces for Application Layer
@@ -27,6 +29,20 @@ class AccountRepositoryInterface(ABC):
         """Atomically update two accounts (for transfers)."""
         pass
 
+    @abstractmethod
+    def get_constraints(self, account_id: str) -> LimitConstraint:
+        """Retrieve the limit constraints for a given account."""
+        pass
+    
+    @abstractmethod
+    def save_constraints(self, account_id: str, constraint: LimitConstraint) -> None:
+        """Persist the limit constraints for a given account."""
+        pass
+
+    def get_constraint_dict(self) -> dict:
+        """Retrieve all constraints."""
+        pass
+
 class TransactionRepositoryInterface(ABC):
     @abstractmethod
     def save_transaction(self, transaction: Transaction) -> str:
@@ -42,6 +58,8 @@ class TransactionRepositoryInterface(ABC):
     def find_transaction_by_id(self, tx_id: str) -> Transaction:
         """Retrieve a single transaction by its ID."""
         pass
+
+    
 
 
 # Application Services

@@ -1,5 +1,5 @@
 from uuid import uuid4
-from datetime import datetime
+from datetime import datetime, timezone
 
 class Transaction:
     def __init__(
@@ -12,7 +12,7 @@ class Transaction:
         self.account_id = account_id
         self.transaction_type = transaction_type
         self.amount = amount
-        self.timestamp = datetime.utcnow()
+        self.timestamp = datetime.now(timezone.utc)
 
     def __repr__(self):
         return (

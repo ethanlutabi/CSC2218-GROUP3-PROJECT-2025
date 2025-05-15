@@ -1,6 +1,6 @@
-from checking_account import CheckingAccount
-from savings_account import SavingsAccount
-from create_accounts import Account
+from domain.accounts.checking_account import CheckingAccount
+from domain.accounts.savings_account import SavingsAccount
+from domain.accounts.create_accounts import Account
 
 
 class AccountFactory:

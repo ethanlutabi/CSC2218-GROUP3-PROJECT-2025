@@ -1,4 +1,4 @@
-from create_accounts import Account
+from domain.accounts.create_accounts import Account
 
 
 class SavingsAccount(Account):

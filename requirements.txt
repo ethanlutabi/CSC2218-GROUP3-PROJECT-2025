@@ -1,7 +1,5 @@
 annotated-types==0.7.0
 anyio==4.9.0
-# Editable install with no version control (banking_app==0.1)
--e /Users/Ethan/Desktop/old
 certifi==2025.4.26
 chardet==5.2.0
 charset-normalizer==3.4.2
